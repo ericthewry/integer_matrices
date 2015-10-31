@@ -17,9 +17,22 @@ prompt.get(['matrix'], function(err, result){
     console.log("ERROR: Determinant of Matrix cannot be Zero")
   } else {
     var N = P.cols()
-    console.log("\nYou have chosen 1 - " + k + ", 1, and 1 + " + k + " as your eigenvalues")
+    var message = "\nYou have chosen "
+    var eigenvalues = []
 
-    eigenvalues = [1-k, 1, 1+k]
+    for(var i = -1; i < N-1; i++){
+      if(i < 0){
+        message += "(1 - " + (k) +"), "
+      } else if (i === 0) {
+        message += "(1)"
+      } else {
+        message += ", (1 + " + (i*k) + ")"
+      }
+
+      eigenvalues.push(1+i*k)
+    }
+
+    console.log(message)
 
     // create D
     var D = $.Matrix.Diagonal(eigenvalues)
@@ -28,7 +41,8 @@ prompt.get(['matrix'], function(err, result){
 
     // create A
     var A = P.x(D).x(P.inv())
-    console.log("\n The characteristic polynomial is \n\t" + charPoly(A, eigenvalues))
+    console.log("\n The final matrix is \n" + A.inspect()  )
+    console.log("\n Its characteristic polynomial is \n\t" + charPoly(A, eigenvalues))
   }
 })
 
