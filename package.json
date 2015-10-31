@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.13.3",
+    "prompt": "^0.2.14",
     "sylvester": "file:sylvester"
   }
 }
