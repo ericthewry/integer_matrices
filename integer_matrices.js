@@ -1,6 +1,9 @@
 var $ = require("sylvester")
 var prompt = require("prompt")
 
+PRECISION = 5
+RESIDUE = 7
+
 prompt.start()
 
 prompt.get(['matrix'], function(err, result){
@@ -22,14 +25,14 @@ prompt.get(['matrix'], function(err, result){
 
     for(var i = -1; i < N-1; i++){
       if(i < 0){
-        message += "(1 - " + (k) +"), "
+        message += "(" + RESIDUE + " - " + (k) +"), "
       } else if (i === 0) {
-        message += "(1)"
+        message += "(" + RESIDUE + ")"
       } else {
-        message += ", (1 + " + (i*k) + ")"
+        message += ", (" + RESIDUE + " + " + (i*k) + ")"
       }
 
-      eigenvalues.push(1+i*k)
+      eigenvalues.push(RESIDUE+i*k)
     }
 
     console.log(message)
@@ -39,8 +42,8 @@ prompt.get(['matrix'], function(err, result){
 
     console.log("\nThe diagonalized matrix: \n" + (D.inspect()))
 
-    // create A
-    var A = P.x(D).x(P.inv())
+    // create A = PD(P^-1)
+    var A = P.x(D).x(P.inv()).round()
     console.log("\n The final matrix is \n" + A.inspect()  )
     console.log("\n Its characteristic polynomial is \n\t" + charPoly(A, eigenvalues))
   }
@@ -85,9 +88,9 @@ function charPoly(matrix, eVals){
   for(var i = 0; i < eVals.length; i++){
     var lam = eVals[i]
     if (lam < 0){
-      poly += "(&Lambda + " + (-lam) + ")"
+      poly += "(x+ " + (-lam) + ")"
     } else {
-      poly += "(&Lambda - " + lam + ")"
+      poly += "(x - " + lam + ")"
     }
   }
   return poly
@@ -98,3 +101,32 @@ function onErr(err){
   return 1
 }
 
+
+function roundMatrix(m){
+  var dims = m.dimensions()
+  var rows = dims["rows"]
+  var cols = dims ["cols"]
+
+  M = []
+
+  for(var i = 0; i < rows; i++){
+    M.push([])
+    for(var j = 0; j < cols; j++){
+
+      M[i].push(roundToPrecision(m.e(i,j), PRECISION))
+    }
+  }
+  return $M.create(M);
+}
+
+function roundToPrecision(x, p){
+  console.log("rounding "+ x)
+  return parseFloat(x.toFixed(p));
+}
+
+function product(mxs){
+  prod = mxs[0]
+  for(var i = 1; i < mxs.length; i++){
+    prod.x(mxs[i])
+  }
+}
