@@ -16,12 +16,22 @@ runIMIES = function(matrix){
   var string = $(matrix).text();
   var P = mHelp.matrixFromString(string);
   var detP = Math.round(P.determinant());
-  $("#det").text("" + detP);
-  var eigens = mHelp.eigenvalues(P.rows(), detP, 1)
-  setEigenvalues(eigens);
-  var diag = mHelp.diagonal(eigens);
-  setMatrix(mHelp.roundedProduct(P, diag, detP));
-  setCharPoly(eigens);
+
+  // check here if should perform calcs
+  // if should, do
+  // if shouldn't display warning message
+  if(detP == 0){
+    $("#det").text(" [determinant cannot be zero] ");
+  }else{
+    $("#det").text("" + detP);
+    if ((P.rows() === P.cols())){
+      var eigens = mHelp.eigenvalues(P.rows(), detP, 1)
+      setEigenvalues(eigens);
+      var diag = mHelp.diagonal(eigens);
+      setMatrix(mHelp.roundedProduct(P, diag, detP));
+      setCharPoly(eigens);
+    }
+  }
 }
 
 setMatrix = function(matrix){
@@ -42,9 +52,30 @@ setCharPoly = function(eigens){
   $("#charPoly span").html(poly);
 }
 
-setEigenvalues = function(eigens){
+setEigenvalues = function(lambdas){
+  eigens = cleanArray(lambdas);
+  numEls = $("#eigens").children().length;
+  numEigens = eigens.length;
+  if (numEls > numEigens){
+    for (var i = numEigens; i < numEls; i++){
+      $("#eigen" + i).parent().remove();
+    }
+  } else if (numEls < numEigens){
+    for(var i = numEls; i < numEigens; i++){
+      $("#eigens").append("<div class='row'>&lambda;<sub>" + i + "</sub> = <span id='eigen"+i+"'>" + eigens[i]+"</span></div>")
+    }
+  }
   for(var i = 0; i < eigens.length; i++){
-    console.log("#eigen" + i + " -> " + eigens[i]);
     $("#eigen" + i).html("  " + eigens[i]);
   }
+}
+
+cleanArray = function(arr){
+  newArr = [];
+  for(var i = 0; i < arr.length; i++){
+    if(!isNaN(arr[i])){
+      newArr.push(arr[i]);
+    }
+  }
+  return newArr;
 }
