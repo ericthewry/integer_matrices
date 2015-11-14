@@ -15,6 +15,7 @@ prompt.get(['matrix'], function(err, result){
 
   // Generate eigenvalues
   var k = Math.abs(P.determinant())
+
   if (k === 0){
     // fix the matrix so its not diagonalizable
     console.log("ERROR: Determinant of Matrix cannot be Zero")
@@ -43,7 +44,7 @@ prompt.get(['matrix'], function(err, result){
     console.log("\nThe diagonalized matrix: \n" + (D.inspect()))
 
     // create A = PD(P^-1)
-    var A = P.x(D).x(P.inv()).round()
+    var A = P.x(D).x(P.inv().x(k).round()).x(1/k)
     console.log("\n The final matrix is \n" + A.inspect()  )
     console.log("\n Its characteristic polynomial is \n\t" + charPoly(A, eigenvalues))
   }
