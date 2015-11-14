@@ -1,0 +1,56 @@
+body {
+  background-color: #006699!important;
+  color: white!important;
+}
+
+.center{
+  text-align: center;
+}
+
+.matrix-box{
+  background-color: rgba(0,0,0,0.1);
+  text-align: left;
+  float: right;
+  width: 250px;
+  height: 200px;
+  border: 3px solid #CCE0F5;
+}
+.final-box{
+  display: inline;
+}
+.final-label{
+  display: inline;
+  float: right;
+  padding: 25;
+}
+
+.input-matrix{
+  padding: 5 15 5 15;
+}
+
+.final-matrix{
+  font-size: large;
+}
+
+.right{
+  float: right;
+  text-align: right;
+}
+
+.left{
+  float: left;
+  text-align: left;
+}
+
+.charpoly{
+  padding-left: 100!important;
+}
+
+.determinant{
+  padding: 15px;
+}
+
+#eigenvalues{
+ float: left;
+ padding-left: 100px!important;
+}

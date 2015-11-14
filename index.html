@@ -1,0 +1,51 @@
+<head>
+  <link rel="StyleSheet" type="text/css" href="./public/assets/stylesheets/main.css">
+  <script type="text/javascript" src="bundle.js" charset="utf-8"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 center">
+        <h1>IMIEs</h1>
+        <h3>Integer Matrices with Integer Eigenvalues </h3>
+      </div>
+    </div>
+    <div class="row center">
+      <div class="col-md-6">
+        <div "row">
+          <div class="matrix-box">
+            <div contentEditable="true" class='input-matrix'>
+              x, x, x, <br/>
+              x, x, x, <br/>
+              x, x, x <br/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div id="eigenvalues">
+          Eigenvalues:
+          <div class="row">&lambda;<sub>1</sub>=</div>
+          <div class="row">&lambda;<sub>2</sub>=</div>
+          <div class="row">&lambda;<sub>3</sub>=</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 determinant right">determinant = <span id="det">n/a </span></div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 final-box">
+        <div class="right final-matrix">
+          X, X, X <br/>
+          X, X, X <br/>
+          X, X, X <br/>
+        </div>
+        <div class="final-label"> A = </div>
+      </div>
+      <div class='col-md-6 left charpoly'>
+        char (<i>A</i>) = <span>unknown</span>
+      </div>
+    </div>
+  </div>
+</body>
