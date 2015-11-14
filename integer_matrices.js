@@ -63,7 +63,7 @@ exports.matrixFromArray = function(arr){
   return $M(trix);
 }
 
-exports.eigenvalues = function(size, determinant, residue, modulus){
+exports.eigenvalues = function(determinant, residue, modulus){
   eigenvalues = [];
   for(var i = -1; i < N-1 ; i++){
     eigenvalues.push(residue + i*modulus)

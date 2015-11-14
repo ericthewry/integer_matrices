@@ -24,14 +24,6 @@ body {
   padding: 25;
 }
 
-#input-matrix{
-  padding: 5 15 5 15;
-}
-
-.final-matrix{
-  font-size: large;
-}
-
 .right{
   float: right;
   text-align: right;
@@ -53,4 +45,12 @@ body {
 #eigenvalues{
  float: left;
  padding-left: 100px!important;
+}
+
+#input-matrix{
+  padding: 5 15 5 15;
+}
+
+#final-matrix{
+  font-size: large;
 }

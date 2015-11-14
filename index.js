@@ -11,9 +11,9 @@ $(document).ready(
       function(){
         console.log('input');
         var string = $(this).text();
-        console.log(mHelp.arrayFromString(string));
         var P = mHelp.matrixFromString(string)
-        console.log(P.inspect());
+        var detP = P.determinant();
+        $("#det").text("" + detP);
       }
     )
   }
