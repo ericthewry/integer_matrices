@@ -87,15 +87,46 @@ exports.arrayFromString = function (strArr){
   return array
 }
 
-exports.charPoly = function (eVals){
+exports.charPoly = function (eigens){
   var poly = "";
-  for(var i = 0; i < eVals.length; i++){
-    var lam = eVals[i]
-    if (lam < 0){
-      poly += "(x+ " + (-lam) + ")"
-    } else {
-      poly += "(x - " + lam + ")"
+  coeffs = [];
+
+  if (eigens.length === 1){
+    return toPoly(eigens[0]);
+  } else if (eigens.length === 2){
+    coeffs = [1, -(eigens[0] + eigens[1]), (eigens[0]*eigens[1])]
+  } else if (eigens.length === 3){
+    coeffs = [1, -(eigens[0] + eigens[1] + eigens[2]), (eigens[0]*eigens[1] + eigens[1]*eigens[2] + eigens[0]*eigens[2]), -(eigens[0]*eigens[1]*eigens[2])]
+  } else {
+    for(var i = 0; i < eigens.length; i++){
+      poly += toFactor(eigens[i]);
     }
+    return poly;
   }
-  return poly
+  for (var i = coeffs.length-1; i >= 0; i--){
+    poly += toTerm(i, coeffs.reverse())
+  }
+  return poly;
+}
+
+toTerm = function(exp, coeffs){
+  c = ""
+  if (coeffs[exp] != 1){
+    c = coeffs[exp]
+  }
+  if (exp === 0){
+    return (coeffs[exp] + "");
+  } else if (exp === 1){
+    return (c + "x + ");
+  } else {
+    return (c + "x<sup>" + exp + "</sup> + ");
+  }
+}
+
+toFactor = function (lam){
+  if (lam < 0){
+    return "(x+ " + (-lam) + ")";
+  } else {
+    return "(x - " + lam + ")";
+  }
 }
