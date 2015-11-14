@@ -56,17 +56,16 @@ exports.matrixFromArray = function(arr){
   for(var row = 0; row < size ; row++){
     trix.push([]);
     for(var col = 0; col < size; col++){
-      console.log("index " + row + "," + col + " -> " + (row+col))
-      trix[row].push(parseInt(arr[row*3 + col]));
+      trix[row].push(parseInt(arr[row*size + col]));
     }
   }
   return $M(trix);
 }
 
-exports.eigenvalues = function(determinant, residue, modulus){
+exports.eigenvalues = function(size, determinant, residue){
   eigenvalues = [];
-  for(var i = -1; i < N-1 ; i++){
-    eigenvalues.push(residue + i*modulus)
+  for(var i = -1; i < size-1 ; i++){
+    eigenvalues.push(residue + i*determinant)
   }
   return eigenvalues;
 }
