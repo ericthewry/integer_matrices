@@ -35,12 +35,12 @@ body {
   text-align: left;
 }
 
-.charpoly{
-  padding-left: 100!important;
-}
-
 .determinant{
   padding: 15px;
+}
+
+#charpoly{
+  padding-left: 100!important;
 }
 
 #eigenvalues{

@@ -15,17 +15,17 @@ $(document).ready(
 runIMIES = function(matrix){
   var string = $(matrix).text();
   var P = mHelp.matrixFromString(string);
-  var detP = P.determinant();
+  var detP = Math.round(P.determinant());
   $("#det").text("" + detP);
   var eigens = mHelp.eigenvalues(P.rows(), detP, 1)
   setEigenvalues(eigens);
   var diag = mHelp.diagonal(eigens);
   setMatrix(mHelp.roundedProduct(P, diag, detP));
+  setCharPoly(eigens);
 }
 
 setMatrix = function(matrix){
   html = '';
-  console.log(matrix);
   // indexes into array begin at 1
   for(var i = 1; i <= matrix.rows(); i++){
     for(var j = 1; j <= matrix.cols(); j++){
@@ -34,8 +34,12 @@ setMatrix = function(matrix){
     }
     html += "<br/>"
   }
-  console.log(html);
   $("#final-matrix").html(html);
+}
+
+setCharPoly = function(eigens){
+  poly = mHelp.charPoly(eigens);
+  $("#charPoly span").html(poly);
 }
 
 setEigenvalues = function(eigens){

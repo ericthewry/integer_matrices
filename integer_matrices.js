@@ -76,7 +76,7 @@ exports.diagonal = function(eigenvalues){
 
 exports.roundedProduct = function (P, D, det){
   cofactorMatrix = P.inv().x(det)
-  return P.x(D).x(cofactorMatrix).x(1/det)
+  return P.x(D).x(cofactorMatrix).x(1/det).round();
 }
 
 exports.arrayFromString = function (strArr){
@@ -87,7 +87,7 @@ exports.arrayFromString = function (strArr){
   return array
 }
 
-exports.charPoly = function (matrix, eVals){
+exports.charPoly = function (eVals){
   var poly = "";
   for(var i = 0; i < eVals.length; i++){
     var lam = eVals[i]
