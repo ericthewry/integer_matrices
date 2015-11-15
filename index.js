@@ -4,7 +4,7 @@ var mHelp = require('./integer_matrices');
 
 var residue = 1;
 var matrixID = "#input-matrix";
-var eigenCoeffs = [-1,0,1];
+var eigenCoeffs = [0,-1,1];
 
 $(document).ready(
   function(){
@@ -92,12 +92,12 @@ button = function(type, i){
 }
 
 bindButton = function(idx){
-  if(idx === 1){
-    $("#eigenbutton1-up").click(function(){
+  if(idx === 0){
+    $("#eigenbutton0-up").click(function(){
       residue++;
       runIMIES(matrixID);
     });
-    $("#eigenbutton1-down").click(function(){
+    $("#eigenbutton0-down").click(function(){
       residue--;
       runIMIES(matrixID);
     });
