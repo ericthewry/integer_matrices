@@ -15,6 +15,7 @@ body {
   height: 200px;
   border: 3px solid #CCE0F5;
 }
+
 .final-box{
   display: inline;
 }
@@ -54,4 +55,9 @@ body {
 
 #final-matrix{
   font-size: large;
+}
+
+.btn{
+  background: transparent!important;
+  border: none!important;
 }

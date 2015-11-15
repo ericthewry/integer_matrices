@@ -62,7 +62,9 @@ setEigenvalues = function(lambdas){
     }
   } else if (numEls < numEigens){
     for(var i = numEls; i < numEigens; i++){
-      $("#eigens").append("<div class='row'>&lambda;<sub>" + i + "</sub> = <span id='eigen"+i+"'>" + eigens[i]+"</span></div>")
+      $("#eigens").append(
+        "<div class='row'>&lambda;<sub>" + i + "</sub> = <span id='eigen"+i+"'>"
+        + eigens[i]+"</span>" + button("up") + button("down") +"</div>")
     }
   }
   for(var i = 0; i < eigens.length; i++){
@@ -78,4 +80,8 @@ cleanArray = function(arr){
     }
   }
   return newArr;
+}
+
+button = function(type){
+  return "<button type='button' class='btn btn-default'><span class='glyphicon glyphicon-" + type + "load'></span></button>"
 }
