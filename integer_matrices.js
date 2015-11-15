@@ -23,10 +23,10 @@ exports.matrixFromArray = function(arr){
   return $M(trix);
 }
 
-exports.eigenvalues = function(size, determinant, residue){
+exports.eigenvalues = function(size, determinant, residue, coeffs){
   eigenvalues = [];
-  for(var i = -1; i < size-1 ; i++){
-    eigenvalues.push(residue + i*determinant)
+  for(var i = 0; i < size ; i++){
+    eigenvalues.push(residue + coeffs[i]*determinant)
   }
   return eigenvalues;
 }

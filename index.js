@@ -2,13 +2,15 @@ window.jQuery = window.$ =  require('jquery');
 var bs = require('bootstrap-webpack');
 var mHelp = require('./integer_matrices');
 
-console.log('hello world');
+var residue = 1;
+var matrixID = "#input-matrix";
+var eigenCoeffs = [-1,0,1];
 
 $(document).ready(
   function(){
     console.log("page loaded");
-    runIMIES("#input-matrix");
-    $("#input-matrix").bind('input', function(){ runIMIES(this) });
+    runIMIES(matrixID);
+    $(matrixID).bind('input', function(){ runIMIES(this) });
   }
 )
 
@@ -25,7 +27,7 @@ runIMIES = function(matrix){
   }else{
     $("#det").text("" + detP);
     if ((P.rows() === P.cols())){
-      var eigens = mHelp.eigenvalues(P.rows(), detP, 1)
+      var eigens = mHelp.eigenvalues(P.rows(), detP, residue, eigenCoeffs)
       setEigenvalues(eigens);
       var diag = mHelp.diagonal(eigens);
       setMatrix(mHelp.roundedProduct(P, diag, detP));
@@ -64,7 +66,8 @@ setEigenvalues = function(lambdas){
     for(var i = numEls; i < numEigens; i++){
       $("#eigens").append(
         "<div class='row'>&lambda;<sub>" + i + "</sub> = <span id='eigen"+i+"'>"
-        + eigens[i]+"</span>" + button("up") + button("down") +"</div>")
+        + eigens[i]+"</span>" + button("up", i) + button("down", i) +"</div>");
+      bindButton(i);
     }
   }
   for(var i = 0; i < eigens.length; i++){
@@ -82,6 +85,30 @@ cleanArray = function(arr){
   return newArr;
 }
 
-button = function(type){
-  return "<button type='button' class='btn btn-default'><span class='glyphicon glyphicon-white glyphicon-" + type + "load'></span></button>"
+button = function(type, i){
+  return "<button id='eigenbutton"+i+"-"+type+"' type='button' class='btn btn-default'>"+
+    "<span class='glyphicon glyphicon-white glyphicon-" + type + "load'></span>"
+    +"</button>"
+}
+
+bindButton = function(idx){
+  if(idx === 1){
+    $("#eigenbutton1-up").click(function(){
+      residue++;
+      runIMIES(matrixID);
+    });
+    $("#eigenbutton1-down").click(function(){
+      residue--;
+      runIMIES(matrixID);
+    });
+  } else {
+    $("#eigenbutton"+idx+"-up").click(function(){
+      eigenCoeffs[idx]++;
+      runIMIES(matrixID);
+    });
+    $("#eigenbutton"+idx+"-down").click(function(){
+      eigenCoeffs[idx]--;
+      runIMIES(matrixID);
+    });
+  }
 }
