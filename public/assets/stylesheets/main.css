@@ -61,3 +61,7 @@ body {
   background: transparent!important;
   border: none!important;
 }
+
+.glyphicon-white{
+  color: white;
+}

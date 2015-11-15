@@ -83,5 +83,5 @@ cleanArray = function(arr){
 }
 
 button = function(type){
-  return "<button type='button' class='btn btn-default'><span class='glyphicon glyphicon-" + type + "load'></span></button>"
+  return "<button type='button' class='btn btn-default'><span class='glyphicon glyphicon-white glyphicon-" + type + "load'></span></button>"
 }
