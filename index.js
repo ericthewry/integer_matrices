@@ -56,6 +56,7 @@ setCharPoly = function(eigens){
 
 setEigenvalues = function(lambdas){
   eigens = cleanArray(lambdas);
+  console.log(eigens);
   numEls = $("#eigens").children().length;
   numEigens = eigens.length;
   if (numEls > numEigens){
