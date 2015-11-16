@@ -27,7 +27,7 @@ runIMIES = function(matrix){
     $("#det").text("" + detP);
     if ((P.rows() === P.cols())){
       var eigens = mHelp.eigenvalues(P.rows(), detP, residue, eigenCoeffs)
-      setEigenvalues(eigens);
+      setEigenvalues(eigens, detP);
       var diag = mHelp.diagonal(eigens);
       setMatrix(mHelp.roundedProduct(P, diag, detP));
       setCharPoly(eigens);
@@ -53,7 +53,7 @@ setCharPoly = function(eigens){
   $("#charPoly span").html(poly);
 }
 
-setEigenvalues = function(lambdas){
+setEigenvalues = function(lambdas, det){
   eigens = cleanArray(lambdas);
   numEls = $("#eigens").children().length;
   numEigens = eigens.length;
@@ -66,11 +66,11 @@ setEigenvalues = function(lambdas){
       $("#eigens").append(
         "<div class='row'>&lambda;<sub>" + i + "</sub> = <span id='eigen"+i+"'>"
         + eigens[i]+"</span>" + button("up", i) + button("down", i) +"</div>");
-      bindButton(i);
     }
   }
   for(var i = 0; i < eigens.length; i++){
     $("#eigen" + i).html("  " + eigens[i]);
+    bindButton(i, det);
   }
 }
 
@@ -90,7 +90,9 @@ button = function(type, i){
     +"</button>"
 }
 
-bindButton = function(idx){
+bindButton = function(idx, det){
+  $("#eigenbutton"+idx+"-up").unbind('click');
+  $("#eigenbutton"+idx+"-down").unbind('click');
   if(idx === 0){
     $("#eigenbutton0-up").click(function(){
       residue++;
@@ -102,11 +104,11 @@ bindButton = function(idx){
     });
   } else {
     $("#eigenbutton"+idx+"-up").click(function(){
-      eigenCoeffs[idx]++;
+      det < 0 ? eigenCoeffs[idx]-- : eigenCoeffs[idx]++ ;
       runIMIES(matrixID);
     });
     $("#eigenbutton"+idx+"-down").click(function(){
-      eigenCoeffs[idx]--;
+      det < 0 ? eigenCoeffs[idx]++ : eigenCoeffs[idx]-- ;
       runIMIES(matrixID);
     });
   }
