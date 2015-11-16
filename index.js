@@ -8,7 +8,6 @@ var eigenCoeffs = [0,-1,1];
 
 $(document).ready(
   function(){
-    console.log("page loaded");
     runIMIES(matrixID);
     $(matrixID).bind('input', function(){ runIMIES(this) });
   }
@@ -56,7 +55,6 @@ setCharPoly = function(eigens){
 
 setEigenvalues = function(lambdas){
   eigens = cleanArray(lambdas);
-  console.log(eigens);
   numEls = $("#eigens").children().length;
   numEigens = eigens.length;
   if (numEls > numEigens){

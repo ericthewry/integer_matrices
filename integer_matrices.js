@@ -47,7 +47,7 @@ exports.arrayFromString = function (strArr){
   var array = []
   var numRows = 0
 
-  array = strArr.match(/\d+/g)
+  array = strArr.match(/-?\d+/g)
   return array
 }
 
