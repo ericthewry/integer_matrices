@@ -61,6 +61,7 @@ exports.charPoly = function (eigens){
     coeffs = [1, -(eigens[0] + eigens[1]), (eigens[0]*eigens[1])]
   } else if (eigens.length === 3){
     coeffs = [1, -(eigens[0] + eigens[1] + eigens[2]), (eigens[0]*eigens[1] + eigens[1]*eigens[2] + eigens[0]*eigens[2]), -(eigens[0]*eigens[1]*eigens[2])]
+    console.log(coeffs);
   } else {
     for(var i = 0; i < eigens.length; i++){
       poly += toFactor(eigens[i]);
@@ -68,20 +69,22 @@ exports.charPoly = function (eigens){
     return poly;
   }
   for (var i = coeffs.length-1; i >= 0; i--){
-    poly += toTerm(i, coeffs.reverse())
+    poly += toTerm(i, coeffs)
   }
   return poly;
 }
 
 toTerm = function(exp, coeffs){
+    len = coeffs.length - 1;
+  // console.log (coeffs)
   c = ""
-  if (coeffs[exp] != 1){
-    c = coeffs[exp]
+  if (coeffs[len - exp] != 1){
+     c = coeffs[len - exp]
   }
   if (exp === 0){
-    return (coeffs[exp] + "");
+     return (c + "");
   } else if (exp === 1){
-    return (c + "x + ");
+     return (c + "x + ");
   } else {
     return (c + "x<sup>" + exp + "</sup> + ");
   }
