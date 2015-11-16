@@ -136,7 +136,6 @@
 	
 	$(document).ready(
 	  function(){
-	    console.log("page loaded");
 	    runIMIES(matrixID);
 	    $(matrixID).bind('input', function(){ runIMIES(this) });
 	  }
@@ -156,7 +155,7 @@
 	    $("#det").text("" + detP);
 	    if ((P.rows() === P.cols())){
 	      var eigens = mHelp.eigenvalues(P.rows(), detP, residue, eigenCoeffs)
-	      setEigenvalues(eigens);
+	      setEigenvalues(eigens, detP);
 	      var diag = mHelp.diagonal(eigens);
 	      setMatrix(mHelp.roundedProduct(P, diag, detP));
 	      setCharPoly(eigens);
@@ -182,7 +181,7 @@
 	  $("#charPoly span").html(poly);
 	}
 	
-	setEigenvalues = function(lambdas){
+	setEigenvalues = function(lambdas, det){
 	  eigens = cleanArray(lambdas);
 	  numEls = $("#eigens").children().length;
 	  numEigens = eigens.length;
@@ -195,11 +194,11 @@
 	      $("#eigens").append(
 	        "<div class='row'>&lambda;<sub>" + i + "</sub> = <span id='eigen"+i+"'>"
 	        + eigens[i]+"</span>" + button("up", i) + button("down", i) +"</div>");
-	      bindButton(i);
 	    }
 	  }
 	  for(var i = 0; i < eigens.length; i++){
 	    $("#eigen" + i).html("  " + eigens[i]);
+	    bindButton(i, det);
 	  }
 	}
 	
@@ -219,7 +218,9 @@
 	    +"</button>"
 	}
 	
-	bindButton = function(idx){
+	bindButton = function(idx, det){
+	  $("#eigenbutton"+idx+"-up").unbind('click');
+	  $("#eigenbutton"+idx+"-down").unbind('click');
 	  if(idx === 0){
 	    $("#eigenbutton0-up").click(function(){
 	      residue++;
@@ -231,11 +232,11 @@
 	    });
 	  } else {
 	    $("#eigenbutton"+idx+"-up").click(function(){
-	      eigenCoeffs[idx]++;
+	      det < 0 ? eigenCoeffs[idx]-- : eigenCoeffs[idx]++ ;
 	      runIMIES(matrixID);
 	    });
 	    $("#eigenbutton"+idx+"-down").click(function(){
-	      eigenCoeffs[idx]--;
+	      det < 0 ? eigenCoeffs[idx]++ : eigenCoeffs[idx]-- ;
 	      runIMIES(matrixID);
 	    });
 	  }
@@ -12375,6 +12376,9 @@
 	exports.eigenvalues = function(size, determinant, residue, coeffs){
 	  eigenvalues = [];
 	  for(var i = 0; i < size ; i++){
+	    if (i >= coeffs.length){
+	      coeffs.push(coeffs[i-1] + 1)
+	    }
 	    eigenvalues.push(residue + coeffs[i]*determinant)
 	  }
 	  return eigenvalues;
@@ -12393,7 +12397,7 @@
 	  var array = []
 	  var numRows = 0
 	
-	  array = strArr.match(/\d+/g)
+	  array = strArr.match(/-?\d+/g)
 	  return array
 	}
 	
@@ -12407,6 +12411,7 @@
 	    coeffs = [1, -(eigens[0] + eigens[1]), (eigens[0]*eigens[1])]
 	  } else if (eigens.length === 3){
 	    coeffs = [1, -(eigens[0] + eigens[1] + eigens[2]), (eigens[0]*eigens[1] + eigens[1]*eigens[2] + eigens[0]*eigens[2]), -(eigens[0]*eigens[1]*eigens[2])]
+	    console.log(coeffs);
 	  } else {
 	    for(var i = 0; i < eigens.length; i++){
 	      poly += toFactor(eigens[i]);
@@ -12414,20 +12419,22 @@
 	    return poly;
 	  }
 	  for (var i = coeffs.length-1; i >= 0; i--){
-	    poly += toTerm(i, coeffs.reverse())
+	    poly += toTerm(i, coeffs)
 	  }
 	  return poly;
 	}
 	
 	toTerm = function(exp, coeffs){
+	    len = coeffs.length - 1;
+	  // console.log (coeffs)
 	  c = ""
-	  if (coeffs[exp] != 1){
-	    c = coeffs[exp]
+	  if (coeffs[len - exp] != 1){
+	     c = coeffs[len - exp]
 	  }
 	  if (exp === 0){
-	    return (coeffs[exp] + "");
+	     return (c + "");
 	  } else if (exp === 1){
-	    return (c + "x + ");
+	     return (c + "x + ");
 	  } else {
 	    return (c + "x<sup>" + exp + "</sup> + ");
 	  }
