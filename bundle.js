@@ -146,9 +146,6 @@
 	  var P = mHelp.matrixFromString(string);
 	  var detP = Math.round(P.determinant());
 	
-	  // check here if should perform calcs
-	  // if should, do
-	  // if shouldn't display warning message
 	  if(detP == 0){
 	    $("#det").text(" [determinant cannot be zero] ");
 	  }else{
@@ -12405,28 +12402,24 @@
 	  var poly = "";
 	  coeffs = [];
 	
-	  if (eigens.length === 1){
-	    return toPoly(eigens[0]);
-	  } else if (eigens.length === 2){
-	    coeffs = [1, -(eigens[0] + eigens[1]), (eigens[0]*eigens[1])]
-	  } else if (eigens.length === 3){
-	    coeffs = [1, -(eigens[0] + eigens[1] + eigens[2]), (eigens[0]*eigens[1] + eigens[1]*eigens[2] + eigens[0]*eigens[2]), -(eigens[0]*eigens[1]*eigens[2])]
-	    console.log(coeffs);
+	  return polyToString(expandFactors(eigensToPolyArr(eigens), []));
+	}
+	
+	expandFactors = function expand (factorized, soFar){
+	  if (factorized.length === 0){
+	    return soFar;
 	  } else {
-	    for(var i = 0; i < eigens.length; i++){
-	      poly += toFactor(eigens[i]);
+	    factor = factorized.pop()
+	    if(soFar.length === 0){
+	      return expand(factorized, factor);
+	    }else{
+	      return expand(factorized, polyMult(soFar, factor));
 	    }
-	    return poly;
 	  }
-	  for (var i = coeffs.length-1; i >= 0; i--){
-	    poly += toTerm(i, coeffs)
-	  }
-	  return poly;
 	}
 	
 	toTerm = function(exp, coeffs){
-	    len = coeffs.length - 1;
-	  // console.log (coeffs)
+	  len = coeffs.length - 1;
 	  c = ""
 	  if (coeffs[len - exp] != 1){
 	     c = coeffs[len - exp]
@@ -12447,6 +12440,74 @@
 	    return "(x - " + lam + ")";
 	  }
 	}
+	
+	// polynomials are ordered by coefficients of decreasing degree
+	// polyB is assumed to be a binomial of the form (x + b)
+	polyMult = function (polyA, polyB){
+	  lengthA = polyA.length;
+	
+	  // multiply by the x term
+	  timesX = polyA.slice();
+	  timesX.push(0);
+	
+	  // make them the same length
+	  timesConst = polyA.slice();
+	  timesConst.unshift(0);
+	
+	  // multiply by the constant (b)
+	  for(var i = 0; i < lengthA; i++){
+	    timesConst[i+1] *= polyB[1];
+	  }
+	
+	  // add the polynomials
+	  return addTwoArrays(timesX, timesConst);
+	}
+	
+	stringToPoly = function (str){
+	  return str.replace(/\bx/g, "1x").replace(/x[\^\d+]*/g,"").match(/-?\s*\d+/g).map(removeWhitespace).map(Number)
+	}
+	
+	eigensToPolyArr = function (eigens){
+	  polys = []
+	  for(var e = 0; e < eigens.length; e++){
+	    polys.push([1, -eigens[e]]);
+	  }
+	  return polys;
+	}
+	
+	polyToString = function(poly){
+	  str = "";
+	  len = poly.length - 1;
+	  for (var i = len; i > 0 ; i--){
+	    if (poly[len-i] != 1){
+	      str += poly[len-i]
+	    }
+	    str += "x"
+	    if (i != 1){
+	      str += "<sup>" + i + "</sup> "
+	    }
+	    str +=" + ";
+	  }
+	  str += poly[len];
+	  return str.replace(/\+\s-/g, "- ");
+	}
+	
+	// Add two integer arrays of the same length
+	// otherwise return an empty array
+	addTwoArrays = function(arr1, arr2){
+	  sum = [];
+	  if (arr1.length == arr2.length){
+	    for (var i = 0; i < arr1.length; i++){
+	      sum.push(arr1[i] + arr2[i]);
+	    }
+	  }
+	  return sum;
+	}
+	
+	removeWhitespace = function (str) {
+	  return str.replace(/\s+/g, "")
+	}
+
 
 /***/ },
 /* 96 */
