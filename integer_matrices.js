@@ -55,23 +55,20 @@ exports.charPoly = function (eigens){
   var poly = "";
   coeffs = [];
 
-  if (eigens.length === 1){
-    return toPoly(eigens[0]);
-  } else if (eigens.length === 2){
-    coeffs = [1, -(eigens[0] + eigens[1]), (eigens[0]*eigens[1])]
-  } else if (eigens.length === 3){
-    coeffs = [1, -(eigens[0] + eigens[1] + eigens[2]), (eigens[0]*eigens[1] + eigens[1]*eigens[2] + eigens[0]*eigens[2]), -(eigens[0]*eigens[1]*eigens[2])]
-    console.log(coeffs);
+  return polyToString(expandFactors(eigensToPolyArr(eigens), []));
+}
+
+expandFactors = function expand (factorized, soFar){
+  if (factorized.length === 0){
+    return soFar;
   } else {
-    for(var i = 0; i < eigens.length; i++){
-      poly += toFactor(eigens[i]);
+    factor = factorized.pop()
+    if(soFar.length === 0){
+      return expand(factorized, factor);
+    }else{
+      return expand(factorized, polyMult(soFar, factor));
     }
-    return poly;
   }
-  for (var i = coeffs.length-1; i >= 0; i--){
-    poly += toTerm(i, coeffs)
-  }
-  return poly;
 }
 
 toTerm = function(exp, coeffs){
@@ -99,7 +96,7 @@ toFactor = function (lam){
 
 // polynomials are ordered by coefficients of decreasing degree
 // polyB is assumed to be a binomial of the form (x + b)
-exports.polyMult = function (polyA, polyB){
+polyMult = function (polyA, polyB){
   lengthA = polyA.length;
 
   // multiply by the x term
@@ -119,19 +116,32 @@ exports.polyMult = function (polyA, polyB){
   return addTwoArrays(timesX, timesConst);
 }
 
-exports.stringToPoly = function (str){
-  return str.replace(/\bx/g, "1x").replace(/x[\^\d]*/g,"").match(/-?\s*\d/g).map(removeWhitespace).map(Number)
+stringToPoly = function (str){
+  return str.replace(/\bx/g, "1x").replace(/x[\^\d+]*/g,"").match(/-?\s*\d+/g).map(removeWhitespace).map(Number)
+}
+
+eigensToPolyArr = function (eigens){
+  polys = []
+  for(var e = 0; e < eigens.length; e++){
+    polys.push([1, -eigens[e]]);
+  }
+  return polys;
 }
 
 polyToString = function(poly){
   str = "";
-  for (var i = poly.length - 1; i > 0 ; i--){
-    if (poly[i] != 1){
-      str += poly[i]
+  len = poly.length - 1;
+  for (var i = len; i > 0 ; i--){
+    if (poly[len-i] != 1){
+      str += poly[len-i]
     }
-    str += "x<sup>" + i + "</sup> + "
+    str += "x"
+    if (i != 1){
+      str += "<sup>" + i + "</sup> "
+    }
+    str +=" + ";
   }
-  str += poly[0];
+  str += poly[len];
   return str.replace(/\+\s-/g, "- ");
 }
 
