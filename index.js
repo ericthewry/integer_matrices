@@ -18,9 +18,6 @@ runIMIES = function(matrix){
   var P = mHelp.matrixFromString(string);
   var detP = Math.round(P.determinant());
 
-  // check here if should perform calcs
-  // if should, do
-  // if shouldn't display warning message
   if(detP == 0){
     $("#det").text(" [determinant cannot be zero] ");
   }else{
