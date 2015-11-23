@@ -132,10 +132,12 @@
 	
 	var residue = 1;
 	var matrixID = "#input-matrix";
-	var eigenCoeffs = [0,-1,1];
+	var DEFAULT_COEFFS = [0, -1, 1, -2, 2, -3, 3];
+	var eigenCoeffs = DEFAULT_COEFFS.slice();
 	
 	$(document).ready(
 	  function(){
+	    bindReset();
 	    runIMIES(matrixID);
 	    $(matrixID).bind('input', function(){ runIMIES(this) });
 	  }
@@ -189,7 +191,7 @@
 	  } else if (numEls < numEigens){
 	    for(var i = numEls; i < numEigens; i++){
 	      $("#eigens").append(
-	        "<div class='row'>&lambda;<sub>" + i + "</sub> = <span id='eigen"+i+"'>"
+	        "<div class='row'>&lambda;<sub>" + (i+1) + "</sub> = <span id='eigen"+i+"'>"
 	        + eigens[i]+"</span>" + button("up", i) + button("down", i) +"</div>");
 	    }
 	  }
@@ -210,7 +212,7 @@
 	}
 	
 	button = function(type, i){
-	  return "<button id='eigenbutton"+i+"-"+type+"' type='button' class='btn btn-default'>"+
+	  return "<button id='eigenbutton"+i+"-"+type+"' type='button' class='glyph-btn btn btn-default'>"+
 	    "<span class='glyphicon glyphicon-white glyphicon-" + type + "load'></span>"
 	    +"</button>"
 	}
@@ -237,6 +239,16 @@
 	      runIMIES(matrixID);
 	    });
 	  }
+	}
+	
+	bindReset = function(){
+	  console.log("bind reset-button");
+	  $("#reset-button").click(function(){
+	      eigenCoeffs = DEFAULT_COEFFS.slice();
+	      residue = 1;
+	      runIMIES(matrixID);
+	    }
+	  )
 	}
 
 /***/ },
@@ -12374,7 +12386,7 @@
 	  eigenvalues = [];
 	  for(var i = 0; i < size ; i++){
 	    if (i >= coeffs.length){
-	      coeffs.push(coeffs[i-1] + 1)
+	      coeffs.push(coeffs[i-2] - 1)
 	    }
 	    eigenvalues.push(residue + coeffs[i]*determinant)
 	  }
@@ -12479,17 +12491,17 @@
 	  str = "";
 	  len = poly.length - 1;
 	  for (var i = len; i > 0 ; i--){
-	    if (poly[len-i] != 1){
-	      str += poly[len-i]
+	    if (poly[len-i] != 0){
+	      if (poly[len-i] != 1){ str += poly[len-i] }
+	      str += "x"
+	      if (i != 1){ str += "<sup>" + i + "</sup> " }
 	    }
-	    str += "x"
-	    if (i != 1){
-	      str += "<sup>" + i + "</sup> "
+	    if(poly[len-i+1] != 0 && !(len-i === 0 && poly[len-i] === 0) ){
+	      str +=" + "
 	    }
-	    str +=" + ";
 	  }
-	  str += poly[len];
-	  return str.replace(/\+\s-/g, "- ");
+	  if (poly[len] != 0){ str += poly[len] }
+	  return str.replace(/\+\s-/g, "- ").replace(/1x/g, "x");
 	}
 	
 	// Add two integer arrays of the same length

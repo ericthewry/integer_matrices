@@ -57,7 +57,12 @@ body {
   font-size: large;
 }
 
-.glyph-btn{
+/*.glyph-btn{
+  background: transparent!important;
+  border: none!important;
+}*/
+
+#eigens button{
   background: transparent!important;
   border: none!important;
 }
