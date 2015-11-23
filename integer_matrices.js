@@ -132,17 +132,17 @@ polyToString = function(poly){
   str = "";
   len = poly.length - 1;
   for (var i = len; i > 0 ; i--){
-    if (poly[len-i] != 1){
-      str += poly[len-i]
+    if (poly[len-i] != 0){
+      if (poly[len-i] != 1){ str += poly[len-i] }
+      str += "x"
+      if (i != 1){ str += "<sup>" + i + "</sup> " }
     }
-    str += "x"
-    if (i != 1){
-      str += "<sup>" + i + "</sup> "
+    if(poly[len-i+1] != 0 && !(len-i === 0 && poly[len-i] === 0) ){
+      str +=" + "
     }
-    str +=" + ";
   }
-  str += poly[len];
-  return str.replace(/\+\s-/g, "- ");
+  if (poly[len] != 0){ str += poly[len] }
+  return str.replace(/\+\s-/g, "- ").replace(/1x/g, "x");
 }
 
 // Add two integer arrays of the same length
