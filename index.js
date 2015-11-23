@@ -4,11 +4,12 @@ var mHelp = require('./integer_matrices');
 
 var residue = 1;
 var matrixID = "#input-matrix";
-var DEFAULT_COEFFS = [0, -1, 1]
-var eigenCoeffs = DEFAULT_COEFFS;
+var DEFAULT_COEFFS = [0, -1, 1, -2, 2, -3, 3];
+var eigenCoeffs = DEFAULT_COEFFS.slice();
 
 $(document).ready(
   function(){
+    bindReset();
     runIMIES(matrixID);
     $(matrixID).bind('input', function(){ runIMIES(this) });
   }
@@ -110,4 +111,14 @@ bindButton = function(idx, det){
       runIMIES(matrixID);
     });
   }
+}
+
+bindReset = function(){
+  console.log("bind reset-button");
+  $("#reset-button").click(function(){
+      eigenCoeffs = DEFAULT_COEFFS.slice();
+      residue = 1;
+      runIMIES(matrixID);
+    }
+  )
 }
