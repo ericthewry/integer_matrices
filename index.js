@@ -4,7 +4,8 @@ var mHelp = require('./integer_matrices');
 
 var residue = 1;
 var matrixID = "#input-matrix";
-var eigenCoeffs = [0,-1,1];
+var DEFAULT_COEFFS = [0, -1, 1]
+var eigenCoeffs = DEFAULT_COEFFS;
 
 $(document).ready(
   function(){
@@ -61,7 +62,7 @@ setEigenvalues = function(lambdas, det){
   } else if (numEls < numEigens){
     for(var i = numEls; i < numEigens; i++){
       $("#eigens").append(
-        "<div class='row'>&lambda;<sub>" + i + "</sub> = <span id='eigen"+i+"'>"
+        "<div class='row'>&lambda;<sub>" + (i+1) + "</sub> = <span id='eigen"+i+"'>"
         + eigens[i]+"</span>" + button("up", i) + button("down", i) +"</div>");
     }
   }
@@ -82,7 +83,7 @@ cleanArray = function(arr){
 }
 
 button = function(type, i){
-  return "<button id='eigenbutton"+i+"-"+type+"' type='button' class='btn btn-default'>"+
+  return "<button id='eigenbutton"+i+"-"+type+"' type='button' class='glyph-btn btn btn-default'>"+
     "<span class='glyphicon glyphicon-white glyphicon-" + type + "load'></span>"
     +"</button>"
 }

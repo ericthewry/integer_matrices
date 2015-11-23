@@ -27,7 +27,7 @@ exports.eigenvalues = function(size, determinant, residue, coeffs){
   eigenvalues = [];
   for(var i = 0; i < size ; i++){
     if (i >= coeffs.length){
-      coeffs.push(coeffs[i-1] + 1)
+      coeffs.push(coeffs[i-2] - 1)
     }
     eigenvalues.push(residue + coeffs[i]*determinant)
   }

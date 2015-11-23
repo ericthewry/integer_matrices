@@ -57,11 +57,19 @@ body {
   font-size: large;
 }
 
-.btn{
+.glyph-btn{
   background: transparent!important;
   border: none!important;
 }
 
 .glyphicon-white{
   color: white;
+}
+
+.reset-button{
+  margin-top: 30;
+  bottom: 0;
+  left:0;
+  color: white!important;
+  background-color: transparent!important;
 }
