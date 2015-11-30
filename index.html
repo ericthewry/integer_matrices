@@ -9,41 +9,108 @@
       <div class="col-md-12 center">
         <h1>IMIEs</h1>
         <h3>Integer Matrices with Integer Eigenvalues </h3>
+        <div class="intro-text"> <p>The problem of diagonalizing a matrix A can
+        be thought of as A = PDP<sup>-1</sup> where P is ain invertible matrix
+        whose columns are the eigenvectors of A, and D is a diagonal matrix
+        whose diagonal entries are the eigenvalues of A.</p> <p> This tool
+        allows the user to "reverse engineer" a diagonalization problem. The
+        goal is to construct Integer Matrices with Integer Eigenvalues (IMIEs).
+        </p> <p> You will supply the integer matrix P, and the tool will
+        calculate the determinant of P to assure that it is non-zero, so that P
+        is invertible). </p> <p> The tool will then allow you to select integer eigenvalues in such a way that
+        A will be an IMIE. The matrix A along with its characteristic
+        polynomial will be returned </p> </div>
       </div>
     </div>
     <div class="row center">
       <div class="col-md-6">
-        <div "row">
-          <div class="matrix-box">
-            <div contentEditable="true" id='input-matrix'>
-              [1, 1, 1] <br/>
-              [2, 1, 2] <br/>
-              [3, 2, 1] <br/>
-            </div>
+        <div class='matrix-label'>
+          <span class="left"> Enter an n &times; n matrix, P, below: </span> <br/>
+          <span class="left"> This should work for any n, but it remains untested for n > 4 </span>
+        </div>
+       <div class="matrix-box">
+          <div contentEditable="true" id='input-matrix'>
+            [1, 1, 1] <br/>
+            [2, 1, 2] <br/>
+            [3, 2, 1] <br/>
           </div>
+          <div class="determinant"> det(P) = <span id="det">n/a </span> </div>
         </div>
       </div>
       <div class="col-md-6 eig-container">
-        <div id="eigenvalues">
-          Eigenvalues:<div id='eigens'></div>
-          <button type="button" id="reset-button" class="btn btn-default">Reset</button>
+        <div id="eigenvalues" >
+          Eigenvalues of A:
+          <div class="eigen-text">
+            The eigenvalues a for the 3 &times; 3 case are initially set at
+            &lambda;<sub>1</sub> =  1, &lambda;<sub>2</sub> = &lambda;<sub>1</sub>
+            - det P, and &lambda;<sub>3</sub> = &lambda;<sub>1</sub> + det P <br/>
+            You can increase &lambda;<sub>1</sub> in increments of &plusmn; 1.
+            This will change all eigenvalues simultaneously to guarantee A is an IMIE.
+            The arrows on the other eigenvalues change that eigenvalue in
+            increments of det P.
+          </div>
+          <div id='eigens'></div>
+          <button type="button" id="reset-button" class="btn btn-default">Reset Eigenvalues</button>
         </div>
       </div>
     </div>
+    <hr>
     <div class="row">
-      <div class="col-md-6 determinant right">determinant = <span id="det">n/a </span></div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 final-box">
-        <div id="final-matrix" class="right">
-          X, X, X <br/>
-          X, X, X <br/>
-          X, X, X <br/>
+      <div class="col-md-12 final">
+        <div class="final-box ">
+          <div class="final-label"> PDP<sup>-1</sup> = A = </div>
+          <div id="final-matrix" >
+            X, X, X <br/>
+            X, X, X <br/>
+            X, X, X <br/>
+          </div>
         </div>
-        <div class="final-label"> A = </div>
+        <div id="charpoly"> char (<i>A</i>) = <span>unknown</span> </div>
       </div>
-      <div id="charpoly" class='col-md-6 left'>
-        char (<i>A</i>) = <span>unknown</span>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="intro-text">
+          Frequently Asked Questions:
+          <ul>
+            <li>
+              <b>Why do these choices work?</b> <br>
+              <p> In our paper (citation), we give two quick proofs that as long as
+              all the eigen values are congruent to each other modulo the
+              determinant of P, the matric A = PDP<sup>-1</sup> has integer entries.
+              </p>
+            </li>
+            <li>
+              <b>Does this tool find all IMIEs?</b> <br>
+              <p> No. There exist other IMIEs that are not obtained by this tool.
+              Given certain matrices, P, one can select eigenvalues with are not
+              congruent modulo the determinant of P and still get an IMIE.
+              (see aforementioned paper) </p>
+            </li>
+            <li>
+              <b>How common are IMIEs?</b> <br>
+              <p>The (title of the) paper "Almost All Integer Matrices Have No Integer
+              Eigenvalues" by Martin and Wong (Amer. Math. Monthly) addresses this
+              question. One cannot start with an integer matrix A and expect it
+              to have integer eigenvalues.</p>
+              <p>Nevertheless, virually all introductory linear algebra and ordinary
+              differential equations classes at the undergraduate level ask
+              students to diagonalize matrices. Exercises always use IMIEs (and
+              are nearly always 4 &times; 4 or smaller). This tool allows an
+              instructor or textbook writer to dynamically contruct IMIEs until
+              the characteristic polynomial looks resonably factorable by their
+              students. One can avoid the value 0 as an eigenvalue (and thus
+              avoid degenerate problems in ODEs) while maintaining fairly small
+              eigenvalues.</p>
+            </li>
+            <li> <b> What about non-diagonalizable examples?</b> <br>
+              <p> Sorry, this tool will not help you with those. However, we will be
+              adding a different tool for constructing all 3 &times; 3
+              diagonalizable matrices with a double eigenvalue. Coming soon. </p>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

@@ -27,6 +27,7 @@ exports.eigenvalues = function(size, determinant, residue, coeffs){
   eigenvalues = [];
   for(var i = 0; i < size ; i++){
     if (i >= coeffs.length){
+      // use formula to generate ith coefficient
       coeffs.push(coeffs[i-2] - 1)
     }
     eigenvalues.push(residue + coeffs[i]*determinant)
