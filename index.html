@@ -10,22 +10,22 @@
         <h1>IMIEs</h1>
         <h3>Integer Matrices with Integer Eigenvalues </h3>
         <h4> A Classroom tool </h4>
-        <div class="intro-text"> <b>Theorem 1</b> An n &times; n matrix A is
-        diagonalizable if and only if A has n linearly independent eigenvectors.
-        <p> In fact, A = PDP<sup>-1</sup>, with D a diagonal matrix, if and only
-         if the columns of P are n linearly independent eigenvectors of A. In
-         this case, the diagonal entries of D are eigenvalues of A that
-         correspond, respectively, to the eigenvalues of P.</p> (CITATION)
+        <div class="intro-text"> <b>Theorem 1</b> An <i>n &times; n</i> matrix <i>A</i> is
+        diagonalizable if and only if <i>A</i> has <i>n</i> linearly independent eigenvectors.
+        <p> In fact, <i>A = PDP<sup>-1</sup></i>, with <i>D</i> a diagonal matrix, if and only
+         if the columns of <i>P</i> are <i>n</i> linearly independent eigenvectors of <i>A</i>. In
+         this case, the diagonal entries of <i>D</i> are eigenvalues of <i>A</i> that
+         correspond, respectively, to the eigenvalues of <i>P</i>.</p> (CITATION)
         </p>
         </div>
-        <h4>This tool helps you set up diagonalization exercises.</h4> <br>
+        <h4>This tool helps set up integral diagonalization exercises.</h4> <br>
       </div>
     </div>
     <div class="row center">
       <div class="col-md-6">
         <div class='matrix-label'>
-          <span class="left"> 1) Enter a non-singular n &times; n matrix, P, below: </span> <br/>
-          <span class="left"> *The tool should work for any n, but it remains untested for n > 4 </span>
+          <span class="left"> 1) Enter a non-singular <i>n &times; n</i> integer
+          matrix, <i>P</i>, below: </span>
         </div>
        <div class="matrix-box">
           <div contentEditable="true" id='input-matrix'>
@@ -33,12 +33,12 @@
             [2, 1, 2] <br/>
             [3, 2, 1] <br/>
           </div>
-          <div class="determinant"> det(P) = <span id="det">n/a </span> </div>
+          <div class="determinant"> det(<i>P</i>) = <span id="det">n/a </span> </div>
         </div>
       </div>
       <div class="col-md-6 eig-container">
         <div id="eigenvalues" >
-          2) Eigenvalues of A:
+          2) Eigenvalues of <i>A</i>:
           <div class="eigen-text">
             Use the arrows to adjust the eigenvalues.
             We've controlled how you can manipulate them to ensure A is an IMIE.
@@ -52,7 +52,7 @@
     <div class="row">
       <div class="col-md-12 final">
         <div class="final-box ">
-          <div class="final-label"> PDP<sup>-1</sup> = A = </div>
+          <div class="final-label"> <i>PDP<sup>-1</sup> = A = </i> </div>
           <div id="final-matrix" >
             X, X, X <br/>
             X, X, X <br/>
@@ -72,21 +72,29 @@
               <b>Why do these choices work?</b> <br>
               <p> In our paper (citation), we give two quick proofs that as long as
               all the eigen values are congruent to each other modulo the
-              determinant of P, the matric A = PDP<sup>-1</sup> has integer entries.
+              determinant of <i>P</i>, the matrix <i>A = PDP<sup>-1</sup></i> has integer entries.
               </p>
             </li>
             <li>
               <b>Does this tool find all IMIEs?</b> <br>
               <p> No. There exist other IMIEs that are not obtained by this tool.
-              Given certain matrices, P, one can select eigenvalues with are not
-              congruent modulo the determinant of P and still get an IMIE.
+              Given certain matrices, <i>P</i>, one can select eigenvalues with are not
+              congruent modulo the determinant of <i>P</i> and still get an IMIE.
               (see aforementioned paper) </p>
+            </li>
+            <li>
+              <b> Does this tool work for all values of <i>n</i>? </b> <br>
+              <p> It should. Rigorous testing has been completed for <i>n</i> in
+              the interval [0,4], since giving students larger matrices is
+              unreasonable in a classroom setting. However, the tool should work
+              for these larger values of <i>n</i>, if desired.
+              </p>
             </li>
             <li>
               <b>How common are IMIEs?</b> <br>
               <p>The (title of the) paper "Almost All Integer Matrices Have No Integer
               Eigenvalues" by Martin and Wong (Amer. Math. Monthly) addresses this
-              question. One cannot start with an integer matrix A and expect it
+              question. One cannot start with an arbitrary integer matrix <i>A</i> and expect it
               to have integer eigenvalues.</p>
               <p>Nevertheless, virually all introductory linear algebra and ordinary
               differential equations classes at the undergraduate level ask
