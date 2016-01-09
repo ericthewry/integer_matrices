@@ -9,24 +9,23 @@
       <div class="col-md-12 center">
         <h1>IMIEs</h1>
         <h3>Integer Matrices with Integer Eigenvalues </h3>
-        <div class="intro-text"> <p>The problem of diagonalizing a matrix A can
-        be thought of as A = PDP<sup>-1</sup> where P is ain invertible matrix
-        whose columns are the eigenvectors of A, and D is a diagonal matrix
-        whose diagonal entries are the eigenvalues of A.</p> <p> This tool
-        allows the user to "reverse engineer" a diagonalization problem. The
-        goal is to construct Integer Matrices with Integer Eigenvalues (IMIEs).
-        </p> <p> You will supply the integer matrix P, and the tool will
-        calculate the determinant of P to assure that it is non-zero, so that P
-        is invertible). </p> <p> The tool will then allow you to select integer eigenvalues in such a way that
-        A will be an IMIE. The matrix A along with its characteristic
-        polynomial will be returned </p> </div>
+        <h4> A Classroom tool </h4>
+        <div class="intro-text"> <b>Theorem 1</b> An n &times; n matrix A is
+        diagonalizable if and only if A has n linearly independent eigenvectors.
+        <p> In fact, A = PDP<sup>-1</sup>, with D a diagonal matrix, if and only
+         if the columns of P are n linearly independent eigenvectors of A. In
+         this case, the diagonal entries of D are eigenvalues of A that
+         correspond, respectively, to the eigenvalues of P.</p> (CITATION)
+        </p>
+        </div>
+        <h4>This tool helps you set up diagonalization exercises.</h4> <br>
       </div>
     </div>
     <div class="row center">
       <div class="col-md-6">
         <div class='matrix-label'>
-          <span class="left"> Enter an n &times; n matrix, P, below: </span> <br/>
-          <span class="left"> This should work for any n, but it remains untested for n > 4 </span>
+          <span class="left"> 1) Enter a non-singular n &times; n matrix, P, below: </span> <br/>
+          <span class="left"> *The tool should work for any n, but it remains untested for n > 4 </span>
         </div>
        <div class="matrix-box">
           <div contentEditable="true" id='input-matrix'>
@@ -39,15 +38,10 @@
       </div>
       <div class="col-md-6 eig-container">
         <div id="eigenvalues" >
-          Eigenvalues of A:
+          2) Eigenvalues of A:
           <div class="eigen-text">
-            The eigenvalues a for the 3 &times; 3 case are initially set at
-            &lambda;<sub>1</sub> =  1, &lambda;<sub>2</sub> = &lambda;<sub>1</sub>
-            - det P, and &lambda;<sub>3</sub> = &lambda;<sub>1</sub> + det P <br/>
-            You can increase &lambda;<sub>1</sub> in increments of &plusmn; 1.
-            This will change all eigenvalues simultaneously to guarantee A is an IMIE.
-            The arrows on the other eigenvalues change that eigenvalue in
-            increments of det P.
+            Use the arrows to adjust the eigenvalues.
+            We've controlled how you can manipulate them to ensure A is an IMIE.
           </div>
           <div id='eigens'></div>
           <button type="button" id="reset-button" class="btn btn-default">Reset Eigenvalues</button>
