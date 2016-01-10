@@ -9,23 +9,19 @@
       <div class="col-md-12 center">
         <h1>IMIEs</h1>
         <h3>Integer Matrices with Integer Eigenvalues </h3>
-        <h4> A Classroom tool </h4>
-        <div class="intro-text"> <b>Theorem 1</b> An <i>n &times; n</i> matrix <i>A</i> is
-        diagonalizable if and only if <i>A</i> has <i>n</i> linearly independent eigenvectors.
-        <p> In fact, <i>A = PDP<sup>-1</sup></i>, with <i>D</i> a diagonal matrix, if and only
-         if the columns of <i>P</i> are <i>n</i> linearly independent eigenvectors of <i>A</i>. In
-         this case, the diagonal entries of <i>D</i> are eigenvalues of <i>A</i> that
-         correspond, respectively, to the eigenvalues of <i>P</i>.</p> (CITATION)
-        </p>
-        </div>
-        <h4>This tool helps set up integral diagonalization exercises.</h4> <br>
+        <h4> A classroom tool to set up integral diagonalization exercises.</h4> <br>
       </div>
     </div>
+    <hr>
     <div class="row center">
-      <div class="col-md-6">
-        <div class='matrix-label'>
-          <span class="left"> 1) Enter a non-singular <i>n &times; n</i> integer
-          matrix, <i>P</i>, below: </span>
+      <div class="col-md-12">
+        <div>
+          <span>
+            <h3>
+              First, enter a non-singular <i>n &times; n</i> integer
+              matrix <i>P</i> below. <br> We use this <i>P</i> to create an IMIE <i>A</i>
+            </h3>
+          </span>
         </div>
        <div class="matrix-box">
           <div contentEditable="true" id='input-matrix'>
@@ -36,11 +32,17 @@
           <div class="determinant"> det(<i>P</i>) = <span id="det">n/a </span> </div>
         </div>
       </div>
-      <div class="col-md-6 eig-container">
-        <div id="eigenvalues" >
-          2) Eigenvalues of <i>A</i>:
+    </div>
+    <br> <hr> <br>
+    <div class="row center">
+      <div class="col-md-12">
+        <div id="eigenvalues">
+          <h3>
+            Now, select your desired eigenvalues for <i>A</i> <br>
+            These form the major diagonal of the diagonalizing matrix <i>D</i>
+          </h3>
           <div class="eigen-text">
-            Use the arrows to adjust the eigenvalues.
+            Use the arrows to adjust the eigenvalues. <br>
             We've controlled how you can manipulate them to ensure A is an IMIE.
           </div>
           <div id='eigens'></div>
@@ -48,9 +50,14 @@
         </div>
       </div>
     </div>
+    <br>
     <hr>
     <div class="row">
       <div class="col-md-12 final">
+        <h3>
+        Below is your generated matrix.
+        </h3>
+        <h5> Click here to see other IMIES we can generate from your <i>P</i> </h5>
         <div class="final-box ">
           <div class="final-label"> <i>PDP<sup>-1</sup> = A = </i> </div>
           <div id="final-matrix" >
@@ -66,7 +73,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="intro-text">
-          Frequently Asked Questions:
+          <h3>Frequently Asked Questions:</h3>
           <ul>
             <li>
               <b>Why do these choices work?</b> <br>

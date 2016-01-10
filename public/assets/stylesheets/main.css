@@ -7,6 +7,7 @@ body {
   text-align: center;
 }
 
+/* @UNUSED */
 .matrix-label{
   width: 250px;
   margin-left:50%;
@@ -20,9 +21,9 @@ body {
   height: 200px;
   border: 3px solid #CCE0F5;
   position:relative;
-  margin-left:50%;
-  margin-right: 50%;
-  margin-top:60;
+  margin-left: 39%;
+  margin-right: 40%;
+  margin-top: 20;
 }
 
 .final{
@@ -68,8 +69,16 @@ body {
 }
 
 #eigenvalues{
- float: left;
- padding-right: 100px!important;
+ /*float: left;
+ padding-right: 100px!important;*/
+}
+
+.eigen-text{
+  text-indent: 25px;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  text-align: center;
 }
 
 #input-matrix{
@@ -101,14 +110,6 @@ body {
   margin-right: 30%;
   text-align: justify;
   padding-bottom: 25px;
-}
-
-.eigen-text{
-  text-indent: 25px;
-  width: 80%;
-  margin-left: 10%;
-  margin-right: 10%;
-  text-align: justify;
 }
 
 p {
