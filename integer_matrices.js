@@ -1,4 +1,4 @@
-var $ = require("sylvester")
+var $ = require("./sylvester/lib/sylvester")
 
 PRECISION = 5
 RESIDUE = 7
@@ -20,7 +20,7 @@ exports.matrixFromArray = function(arr){
       trix[row].push(parseInt(arr[row*size + col]));
     }
   }
-  return $M(trix);
+  return $.Matrix.create(trix);
 }
 
 exports.eigenvalues = function(size, determinant, residue, coeffs){
