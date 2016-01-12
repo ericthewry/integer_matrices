@@ -11,6 +11,35 @@ exports.matrixFromString = function(input){
   return exports.matrixFromArray(exports.arrayFromString(input));
 }
 
+exports.makeNilpotent = function(eigens, det){
+  // create a zeroed matrix
+  nilpot = $.Matrix.Zero(eigens.length, eigens.length)
+  // if there's a duplicate eigenvalue, set the determinant
+  // at that intersection
+  for(int i = 1; i <= eigens.length; i++){
+    for(int j = i + 1; j <= eigens.length; i++){
+      if(eigens[i-1] === eigens[j-1]){
+        nilpot.e(i, j) = det
+      }
+    }
+  }
+  return nilpot
+}
+
+exports.mainMatrix = function(P, eigens, k){
+  var diags = exports.diagonal(eigens);
+  return exports.roundedProduct(P, diag, k);
+}
+
+exports.nilpotOffset = function(P, eigens, k){
+  return mainMatrix(P,eigens,k).add(mainMatrix(P, makeNilpotent(eigens, k), k))
+}
+
+exports.nilpotOffsetTranspose = function(P, eigens){
+  return mainMatrix(P,eigens,k).add(mainMatrix(P, makeNilpotent(eigens, k).transpose(), k))
+}
+
+
 exports.matrixFromArray = function(arr){
   size = Math.sqrt(arr.length);
   trix = []
