@@ -1,15 +1,17 @@
 window.jQuery = window.$ =  require('jquery');
 var bs = require('bootstrap-webpack');
-var mHelp = require('./integer_matrices');
+var imies = require('./integer_matrices');
 
 var residue = 1;
 var matrixID = "#input-matrix";
 var DEFAULT_COEFFS = [0, -1, 1, -2, 2, -3, 3];
 var eigenCoeffs = DEFAULT_COEFFS.slice();
+var matrixSelector = 0
 
 $(document).ready(
   function(){
     bindReset();
+    bindToggle();
     runIMIES(matrixID);
     $(matrixID).bind('input', function(){ runIMIES(this) });
   }
@@ -17,7 +19,7 @@ $(document).ready(
 
 runIMIES = function(matrix){
   var string = $(matrix).text();
-  var P = mHelp.matrixFromString(string);
+  var P = imies.matrixFromString(string);
   var detP = Math.round(P.determinant());
 
   if(detP == 0){
@@ -25,17 +27,21 @@ runIMIES = function(matrix){
   }else{
     $("#det").text("" + detP);
     if ((P.rows() === P.cols())){
-      var eigens = mHelp.eigenvalues(P.rows(), detP, residue, eigenCoeffs)
+      var eigens = imies.eigenvalues(P.rows(), detP, residue, eigenCoeffs)
       setEigenvalues(eigens, detP);
-      var diag = mHelp.diagonal(eigens);
-      setMatrix(mHelp.roundedProduct(P, diag, detP));
+
+      //  imies.make returns the matrix and the string name of the matrix
+      //  i.e. imie === [matrix, name]
+      imie = imies.make(P, eigens, detP, matrixSelector)
+
+      setMatrix(imie[0], imie[1]);
       setCharPoly(eigens);
     }
   }
 }
 
-setMatrix = function(matrix){
-  html = '';
+setMatrix = function(matrix, name){
+  html = ''
   // indexes into array begin at 1
   for(var i = 1; i <= matrix.rows(); i++){
     for(var j = 1; j <= matrix.cols(); j++){
@@ -45,10 +51,11 @@ setMatrix = function(matrix){
     html += "<br/>"
   }
   $("#final-matrix").html(html);
+  $("#mname").html(name);
 }
 
 setCharPoly = function(eigens){
-  poly = mHelp.charPoly(eigens);
+  poly = imies.charPoly(eigens);
   $("#charPoly span").html(poly);
 }
 
@@ -70,6 +77,11 @@ setEigenvalues = function(lambdas, det){
   for(var i = 0; i < eigens.length; i++){
     $("#eigen" + i).html("  " + eigens[i]);
     bindButton(i, det);
+  }
+  if (imies.eigensAreUnique(eigens)){
+    $("#toggle-button").hide()
+  } else {
+    $("#toggle-button").show()
   }
 }
 
@@ -114,10 +126,19 @@ bindButton = function(idx, det){
 }
 
 bindReset = function(){
-  console.log("bind reset-button");
-  $("#reset-button").click(function(){
+  $("#reset-button").click(
+    function(){
       eigenCoeffs = DEFAULT_COEFFS.slice();
       residue = 1;
+      runIMIES(matrixID);
+    }
+  )
+}
+
+bindToggle = function(){
+  $("#toggle-button").click(
+    function(){
+      matrixSelector += 1;
       runIMIES(matrixID);
     }
   )

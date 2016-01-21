@@ -86,12 +86,13 @@ body {
   color: white;
 }
 
-#reset-button{
-  margin-top: 30;
-  bottom: 0;
-  left:0;
+#reset-button, #toggle-button{
   color: white!important;
   background-color: transparent!important;
+}
+
+#reset-button{
+  margin-top: 30;
 }
 
 .intro-text{

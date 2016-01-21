@@ -13,30 +13,55 @@ exports.matrixFromString = function(input){
 
 exports.makeNilpotent = function(eigens, det){
   // create a zeroed matrix
-  nilpot = $.Matrix.Zero(eigens.length, eigens.length)
+  var nilpot = $.Matrix.Zero(eigens.length, eigens.length);
   // if there's a duplicate eigenvalue, set the determinant
   // at that intersection
-  for(int i = 1; i <= eigens.length; i++){
-    for(int j = i + 1; j <= eigens.length; i++){
+  for(var i = 1; i <= eigens.length; i++){
+    for( var j = i + 1; j <= eigens.length; j++){
       if(eigens[i-1] === eigens[j-1]){
-        nilpot.e(i, j) = det
+        els = nilpot.elements
+        els[i][j] = det
+        nilpot.setElements(els)
       }
     }
   }
   return nilpot
 }
 
+exports.make = function(P, eigens, k, count){
+  // If there are no duplicates
+  if (exports.eigensAreUnique(eigens)){
+    return [exports.mainMatrix(P, eigens, k), "PDP<sup>-1</sup> = A ="];
+  }
+  if (count % 3 === 0){
+    return [exports.mainMatrix(P, eigens, k), "PDP<sup>-1</sup> = A ="];
+  } else if (count % 3 === 1){
+    return [exports.nilpotOffset(P, eigens, k), "PDP<sup>-1</sup> + PNP<sup>-1</sup> = B"];
+  } else {
+    return [exports.nilpotTransposeOffset(P, eigens, k), "PDP<sup>-1</sup> + PN<sup>t</sup>P<sup>-1</sup> = B\'"];
+  }
+}
+
+exports.eigensAreUnique = function(eigens){
+  return (new Set(eigens)).size === eigens.length
+}
+
 exports.mainMatrix = function(P, eigens, k){
-  var diags = exports.diagonal(eigens);
+  var diag = exports.diagonal(eigens);
   return exports.roundedProduct(P, diag, k);
 }
 
 exports.nilpotOffset = function(P, eigens, k){
-  return mainMatrix(P,eigens,k).add(mainMatrix(P, makeNilpotent(eigens, k), k))
+  var N = exports.makeNilpotent(eigens, k);
+  var A = exports.mainMatrix(P, eigens, k);
+  var PNPinv = exports.roundedProduct(P, N, k);
+  return A.add(PNPinv);
 }
 
-exports.nilpotOffsetTranspose = function(P, eigens){
-  return mainMatrix(P,eigens,k).add(mainMatrix(P, makeNilpotent(eigens, k).transpose(), k))
+exports.nilpotTransposeOffset = function(P, eigens, k){
+  var A =  exports.mainMatrix(P,eigens,k);
+  var Nt = exports.makeNilpotent(eigens, k).transpose();
+  return A.add(exports.roundedProduct(P, Nt, k))
 }
 
 
